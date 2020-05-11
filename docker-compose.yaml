@@ -1,7 +1,18 @@
 version: "3"
 
 services:
-  server:
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+    - '80:80'
+    - '443:443'
+    links:
+    - slamp
+    restart: always
+    environment:
+      DOMAINS: 'hoge.example.com -> http://slamp:3150'
+
+  slamp:
     image: shanpu/slack-stamp:latest
     container_name: slamp
     command: ["/slamp"]
