@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  server:
+    image: shanpu/slack-stamp:latest
+    container_name: slamp
+    command: ["/slamp"]
+    environment:
+    - "PORT=3150"
+    - "SLACK_VERIFICATION_TOKEN=hoge"
+    - "SLACK_TOKEN=piyo"
+    ports:
+    - "3150:3150"
