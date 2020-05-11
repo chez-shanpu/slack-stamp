@@ -1,0 +1,17 @@
+builds:
+- id: "slamp"
+
+  # Binary name.
+  binary: slamp
+
+  # GOOS list to build for.
+  goos:
+  - linux
+  - darwin
+  - windows
+
+  # GOARCH to build for.
+  goarch:
+  - amd64
+  - arm
+  - arm64
