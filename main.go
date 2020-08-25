@@ -35,10 +35,17 @@ func main() {
 			api := slack.New(token.(string))
 			emojis, err := api.GetEmoji()
 			if err != nil {
-				log.Printf("[ERROR] %v", err)
+				log.Printf("[ERROR] GetEmoji: %v", err)
 				w.WriteHeader(http.StatusInternalServerError)
 			}
 			eUrl := emojis[eName]
+
+			u, err := api.GetUserInfo(s.UserID)
+			if err != nil {
+				log.Printf("[ERROR] GetUserInfo: %v", err)
+				w.WriteHeader(http.StatusInternalServerError)
+			}
+
 			// memo: textに何か入れないと怒られるからとりあえず半角スペースを入れといた
 			a := slack.Attachment{
 				Color:    "FFF",
@@ -46,9 +53,9 @@ func main() {
 				Text:     " ",
 			}
 
-			_, _, err = api.PostMessage(s.ChannelID, slack.MsgOptionUser(s.UserID), slack.MsgOptionAttachments(a))
+			_, _, err = api.PostMessage(s.ChannelID, slack.MsgOptionUsername(s.UserName), slack.MsgOptionIconURL(u.Profile.Image192), slack.MsgOptionAttachments(a))
 			if err != nil {
-				log.Printf("[ERROR] %v", err)
+				log.Printf("[ERROR] Postmessage: %v", err)
 				w.WriteHeader(http.StatusInternalServerError)
 			}
 			w.WriteHeader(http.StatusOK)
