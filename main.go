@@ -53,7 +53,7 @@ func main() {
 				Text:     " ",
 			}
 
-			_, _, err = api.PostMessage(s.ChannelID, slack.MsgOptionUsername(s.UserName), slack.MsgOptionIconURL(u.Profile.Image192), slack.MsgOptionAttachments(a))
+			_, _, err = api.PostMessage(s.ChannelID, slack.MsgOptionUsername(u.Profile.DisplayName), slack.MsgOptionIconURL(u.Profile.Image192), slack.MsgOptionAttachments(a))
 			if err != nil {
 				log.Printf("[ERROR] Postmessage: %v", err)
 				w.WriteHeader(http.StatusInternalServerError)
